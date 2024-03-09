@@ -7,10 +7,10 @@ import { Types } from 'mongoose';
 
 @Injectable()
 export class UserService {
-  constructor(private UserRepository: UserRepository) {}
+  constructor(private userRepository: UserRepository) {}
 
   async create(createUserDto: CreateUserDto) {
-    const userExists = await this.UserRepository.findByEmail(
+    const userExists = await this.userRepository.findByEmail(
       createUserDto.email,
     );
 
@@ -20,20 +20,20 @@ export class UserService {
 
     createUserDto.password = await bcrypt.hash(createUserDto.password, 13);
 
-    return this.UserRepository.create({
+    return this.userRepository.create({
       ...createUserDto,
     });
   }
 
   async findById(id: string | Types.ObjectId) {
-    return this.UserRepository.findById(id);
+    return this.userRepository.findById(id);
   }
 
   async findAll() {
-    return this.UserRepository.findAll();
+    return this.userRepository.findAll();
   }
 
   async findByEmail(email: string) {
-    return this.UserRepository.findByEmail(email);
+    return this.userRepository.findByEmail(email);
   }
 }
